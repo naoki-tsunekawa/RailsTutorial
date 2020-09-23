@@ -16,7 +16,8 @@ RSpec.describe "StaticPages", type: :request do
 
 		# titleタグに"Ruby on Rails Tutorial Sample App"が含まれているかテスト
 		it "has title 'Ruby on Rails Tutorial Sample App'" do
-			expect(response.body).to include "Home #{base_title}"
+			expect(response.body).to include 'Ruby on Rails Tutorial Sample App'
+      expect(response.body).to_not include '| Ruby on Rails Tutorial Sample App'
 		end
 
 	end
