@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'site layout', type: :system do
   context 'access to root_path' do
+    # リファクタリングできる？
     before { visit root_path }
     subject { page }
     it 'has links sach as root_path, help_path and about_path and contact_path' do
@@ -13,6 +14,7 @@ RSpec.describe 'site layout', type: :system do
   end
 
   context 'access to signup_path' do
+    # リファクタリングできる？
     before { visit signup_path }
     subject { page }
     it "has 'Sign up' contens and includes 'Sign up' at title" do

@@ -58,6 +58,13 @@ RSpec.configure do |config|
     Capybara.app_host = "http://#{Capybara.server_host}:#{Capybara.server_port}"
   end
 
+  Shoulda::Matchers.configure do |config|
+    config.integrate do |with|
+      with.test_framework :rspec
+      with.library :rails
+    end
+  end
+
   config.include ApplicationHelper
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
