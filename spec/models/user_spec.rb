@@ -1,10 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  #facrory botが存在するかのテストです
-  it 'has a valid factory bot' do
-    expect(build(:user)).to be_valid
-  end
+
   #ここからバリデーションのテストです
   describe 'validations' do
     it { is_expected.to validate_presence_of(:name) }
@@ -26,14 +23,21 @@ RSpec.describe User, type: :model do
                                       'foo@bar+baz.com').for(:email)
     end
 
+    # emailのユニークテスト
     describe 'validate unqueness of email' do
-      let!(:user) { create(:user, email: 'original@example.com') }
+      before do
+        user_a = FactoryBot.create(:user, email: 'original@example.com')
+      end
+
+      # 同じemailアドレスを登録できないことを確認する。
       it 'is invalid with a duplicate email' do
-        user = build(:user, email: 'original@example.com')
+        user = FactoryBot.build(:user, email: 'original@example.com')
         expect(user).to_not be_valid
       end
+
+      # uppercaseのパターンテスト
       it 'is case insensitive in email' do
-        user = build(:user, email: 'ORIGINAL@EXAMPLE.COM')
+        user = FactoryBot.build(:user, email: 'ORIGINAL@EXAMPLE.COM')
         expect(user).to_not be_valid
       end
     end
