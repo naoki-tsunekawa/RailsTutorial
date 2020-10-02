@@ -4,6 +4,7 @@ RSpec.describe User, type: :model do
 
   #ここからバリデーションのテストです
   describe 'validations' do
+    # email validation spec
     it { is_expected.to validate_presence_of(:name) }
     it { is_expected.to validate_presence_of(:email) }
     it { is_expected.to validate_length_of(:name).is_at_most(50) }
@@ -40,6 +41,21 @@ RSpec.describe User, type: :model do
         user = FactoryBot.build(:user, email: 'ORIGINAL@EXAMPLE.COM')
         expect(user).to_not be_valid
       end
+    end
+
+    # password validation spec
+    describe 'validate presence of password' do
+      it { is_expected.to validate_presence_of(:password) }
+
+      it 'is invalid with a blanck password' do
+        user = FactoryBot.build(:user, password: ' ')
+        expect(user).to_not be_valid
+      end
+
+      it 'is at least 6 characters' do
+        is_expected.to validate_length_of(:password).is_at_least(6)
+      end
+
     end
   end
 end
