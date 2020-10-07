@@ -6,6 +6,8 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+      # ユーザ作成に成功した場合ユーザのページに遷移する
+      log_in @user
       flash[:success] = "Welcome to the Sample App!"
       redirect_to @user
     else
