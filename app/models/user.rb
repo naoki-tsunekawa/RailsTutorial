@@ -14,7 +14,6 @@ class User < ApplicationRecord
 	# password validate
 	validates :password, presence: true, length: { minimum: 6 }
 
-
   class << self
 		# 渡された文字列のハッシュ値を返す
 		def digest(string)
