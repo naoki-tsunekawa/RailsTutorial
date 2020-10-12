@@ -23,7 +23,7 @@ RSpec.describe "Sessions", type: :request do
   # logoutのテスト
   describe 'DELETE #destroy' do
     it 'log out and redirect to root page' do
-      delete logout_path
+      delete logout_path(user)
       expect(response).to redirect_to root_path
       # ここでセッションの値をテストしています。
       # sessonの値がfalse
