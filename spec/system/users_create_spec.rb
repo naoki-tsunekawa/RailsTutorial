@@ -1,6 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe "Users", type: :system do
+RSpec.describe "UsersCreate", type: :system do
+  # ユーザ新規登録のテスト
   describe 'user create a new account' do
     # 有効な値が入力された時
     context 'enter an valid values' do
