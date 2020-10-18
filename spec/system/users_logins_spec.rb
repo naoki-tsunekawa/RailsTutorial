@@ -9,9 +9,8 @@ RSpec.describe "UsersLogins", type: :system do
   describe 'enter an valid values' do
     let!(:user) { FactoryBot.create(:user, email: 'loginuser@example.com', password: 'password') }
     before do
-      fill_in 'Email', with: 'loginuser@example.com'
-      fill_in 'Password', with: 'password'
-      click_button 'Log in'
+      # 作成したユーザでログイン
+      valid_login user
     end
 
     subject { page }
