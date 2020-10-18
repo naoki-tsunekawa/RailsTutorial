@@ -11,8 +11,8 @@ class User < ApplicationRecord
 
 	# セキュアなパスワードを作成
 	has_secure_password
-	# password validate
-	validates :password, presence: true, length: { minimum: 6 }
+	# password バリデーション(ユーザ編集時はパスワードを空でも登録可能)
+	validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
 
 
   class << self
