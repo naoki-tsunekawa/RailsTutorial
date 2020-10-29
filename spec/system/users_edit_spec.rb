@@ -7,13 +7,14 @@ RSpec.describe 'UsersEdits', type: :system do
   # ユーザの編集に成功する
   describe 'user edit account' do
     context 'successful edit' do
-      before do
-        valid_login user
-      end
 
       it 'successful user edit' do
+        # フレンドリーフォーワーディングのテスト
+        # (ユーザ編集画面に遷移してからログイン処理後に編集画面に遷移するテスト)
         # edit pathに遷移する。
         visit edit_user_path(user)
+        # ログイン
+        valid_login user
         # 編集画面でユーザ情報を編集
         fill_in "Name", with: "EditTestUser"
         fill_in "Email", with: "editupdate@example.com"
@@ -26,4 +27,25 @@ RSpec.describe 'UsersEdits', type: :system do
       end
     end
   end
+
+  # ユーザーは編集に失敗する
+  describe 'unsuccessful edit' do
+    before do
+      # userでログイン
+      valid_login user
+    end
+    it 'unsuccessful user edit' do
+      # userの編集ページに遷移する
+      visit edit_user_path(user)
+      # 編集画面でユーザ情報を編集
+      fill_in "Name", with: "EditTestUser"
+      fill_in "Email", with: "editupdate@example.com"
+      # パスワード確認の値を間違える
+      fill_in "Password", with: "password"
+      fill_in "Password confirmation", with: "passwordfoo"
+      click_button "Save changes"
+      expect(user.reload.email).to_not eq "editupdate@example.com"
+    end
+  end
+
 end

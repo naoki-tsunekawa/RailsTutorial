@@ -7,7 +7,6 @@ RSpec.describe "Users", type: :request do
   let(:other_test_user) { FactoryBot.create(:user, email: 'otheruser@example.com') }
 
   describe "GET /signup" do
-
     it "responds successfully" do
       get signup_path
       expect(response).to have_http_status 200
