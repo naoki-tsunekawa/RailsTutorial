@@ -15,8 +15,10 @@ class SessionsController < ApplicationController
       # end
       # ↑同じ意味
       params[:session][:remember_me] == '1' ? remember(user) : forget(user)
-      # リダイレクト
-      redirect_to user
+      # # リダイレクト
+      # redirect_to user
+      # ログインする前に記憶したurlもしくはデフォルトのurlへリダイレクトする
+      redirect_back_or user
     else
       # エラーメッセージを作成する
       flash.now[:danger] = 'Invalid email/password combination'
