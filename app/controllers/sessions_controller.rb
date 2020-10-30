@@ -15,8 +15,7 @@ class SessionsController < ApplicationController
       # end
       # ↑同じ意味
       params[:session][:remember_me] == '1' ? remember(user) : forget(user)
-      # # リダイレクト
-      # redirect_to user
+      # フレンドリーフォワーディング
       # ログインする前に記憶したurlもしくはデフォルトのurlへリダイレクトする
       redirect_back_or user
     else

@@ -1,9 +1,16 @@
 class UsersController < ApplicationController
   # ログインしているユーザのみeditとupdateの処理に入れるようにする。
-  before_action :logged_in_user, only: [:edit, :update]
+  before_action :logged_in_user, only: [:index, :edit, :update]
   # 別ユーザが編集しないようにする。
   before_action :correct_user,   only: [:edit, :update]
 
+  # ユーザ一覧
+  def index
+    # DBからユーザを全件取得する
+    @users = User.all
+  end
+
+  # ユーザ新規登録
   def new
     @user = User.new
   end
@@ -20,10 +27,12 @@ class UsersController < ApplicationController
     end
   end
 
+  # ユーザ詳細
   def show
     @user = User.find(params[:id])
   end
 
+  # ユーザ編集
   def edit
     @user = User.find(params[:id])
   end
