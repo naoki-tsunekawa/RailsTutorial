@@ -89,6 +89,8 @@ GEM
     factory_bot_rails (4.11.1)
       factory_bot (~> 4.11.1)
       railties (>= 3.0.0)
+    faker (2.14.0)
+      i18n (>= 1.6, < 2)
     ffi (1.13.1)
     formatador (0.2.5)
     globalid (0.4.2)
@@ -269,6 +271,7 @@ DEPENDENCIES
   chromedriver-helper
   coffee-rails (~> 4.2)
   factory_bot_rails (~> 4.11)
+  faker
   guard (= 2.16.2)
   guard-minitest (= 2.4.4)
   jbuilder (~> 2.5)
