@@ -203,3 +203,31 @@ input {
     border-bottom: 1px solid $gray-lighter;
   }
 }
+
+// ページネーションをkaminariで実装したので独自にスタイルを適用します。
+// 大部分はbootstrapでスタイルを整えました。
+// 参考にした記事→https://qiita.com/rio_threehouse/items/313824b90a31268b0074
+// display: flexで中央寄せにする。
+.pagination {
+  display: flex;
+	justify-content: center;
+}
+
+/*ページネーション自体のデザイン*/
+.pagination>li>a {
+  border: none;     /*枠線をなくす*/
+  color: #696969;   /*文字の色を変える*/
+}
+
+/* 表示しているページ番号のデザイン */
+.pagination>.active>a {
+  background: #93c9ff;     /*背景の色を変える*/
+  border-radius: 15px;     /*角を丸くする*/
+}
+
+/*ホバー時のデザイン*/
+.pagination>li>a:hover {
+  border-radius: 15px;    /*角を丸くする*/
+}
+
+
