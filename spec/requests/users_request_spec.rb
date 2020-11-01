@@ -6,6 +6,7 @@ RSpec.describe "Users", type: :request do
   let(:test_user) { FactoryBot.create(:user) }
   let(:other_test_user) { FactoryBot.create(:user, email: 'otheruser@example.com') }
 
+  # サインアップ画面遷移テスト
   describe "GET /signup" do
     it "responds successfully" do
       get signup_path
@@ -13,7 +14,7 @@ RSpec.describe "Users", type: :request do
     end
   end
 
-  # create action
+  # ユーザ新規作成テスト
   describe 'create' do
     context 'valid request' do
       it 'adds a user' do
@@ -37,7 +38,7 @@ RSpec.describe "Users", type: :request do
     end
   end
 
-  # edit action
+  # ユーザ編集テスト
   describe 'edit' do
     context 'valid request' do
       # 認可されたユーザーとして
@@ -77,6 +78,12 @@ RSpec.describe "Users", type: :request do
       end
 
     end
+  end
+
+  # ユーザ削除テスト
+  describe 'delete' do
+    # 許可されたユーザとしてユーザを削除できること
+
   end
 
 end
