@@ -29,8 +29,8 @@ RSpec.describe "UsersIndex", type: :system do
 		# ページネーションのテスト
 		# describe "pagination" do
 		# 	it "list each user" do
-    #     User.paginates_per(page: 1).each do |user_test|
-    #       expect(page).to have_css("li", text: user_test.name)
+    #     User.paginates_per(page: 1).each do |user|
+    #       expect(page).to have_css("li", text: user.name)
     #     end
 		# 	end
 		# end

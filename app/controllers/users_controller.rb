@@ -1,8 +1,10 @@
 class UsersController < ApplicationController
-  # ログインしているユーザのみeditとupdateの処理に入れるようにする。
-  before_action :logged_in_user, only: [:index, :edit, :update]
+  # ログインしているユーザのみ使えるアクション
+  before_action :logged_in_user, only: [:index, :edit, :update, :destroy]
   # 別ユーザが編集しないようにする。
   before_action :correct_user,   only: [:edit, :update]
+  # 管理者ユーザのみ削除可能にする。
+  before_action :admin_user,     only: :destroy
 
   # ユーザ一覧
   def index
@@ -48,6 +50,14 @@ class UsersController < ApplicationController
     end
   end
 
+  def destroy
+    # 削除のリンクが見える管理者ユーザのみ削除可能
+    User.find(params[:id]).destroy
+    flash[:success] = "User deleted"
+    redirect_to users_url
+  end
+
+
   private
 
     # strong parameter
@@ -74,6 +84,11 @@ class UsersController < ApplicationController
       # sessions_helper.rbにcurrent_user?メソッドを追加(リファクタリング)
       # redirect_to(root_url) unless @user == current_user
       redirect_to(root_url) unless current_user?(@user)
+    end
+
+    # 管理者かどうか確認
+    def admin_user
+      redirect_to(root_url) unless current_user.admin?
     end
 
 end
