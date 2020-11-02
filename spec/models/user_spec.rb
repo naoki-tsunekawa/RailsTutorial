@@ -27,7 +27,7 @@ RSpec.describe User, type: :model do
     # emailのユニークテスト
     describe 'validate unqueness of email' do
       before do
-        user_a = FactoryBot.create(:user, email: 'original@example.com')
+        FactoryBot.create(:user, email: 'original@example.com')
       end
 
       # 同じemailアドレスを登録できないことを確認する。
