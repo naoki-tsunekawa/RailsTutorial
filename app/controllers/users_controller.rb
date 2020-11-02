@@ -8,7 +8,7 @@ class UsersController < ApplicationController
   def index
     # DBからユーザを全件取得する
     # @users = User.all
-    @users = User.all.page(params[:page])
+    @users = User.page(params[:page]).per(10)
   end
 
   # ユーザ新規登録
