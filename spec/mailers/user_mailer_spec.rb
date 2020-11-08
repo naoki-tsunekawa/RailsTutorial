@@ -1,31 +1,23 @@
 require "rails_helper"
 
 RSpec.describe UserMailer, type: :mailer do
+  let(:user) { FactoryBot.create(:user) }
+
   describe "account_activation" do
-    let(:mail) { UserMailer.account_activation }
+    let(:mail) { UserMailer.account_activation(user) }
 
+    # メール送信のテスト
     it "renders the headers" do
-      expect(mail.subject).to eq("Account activation")
-      expect(mail.to).to eq(["to@example.org"])
-      expect(mail.from).to eq(["from@example.com"])
+      expect(mail.to).to eq ["user_1@example.com"]
+      expect(mail.from).to eq ["noreply@example.com"]
+      expect(mail.subject).to eq "Account activation"
     end
 
+    # メールプレビューのテスト
     it "renders the body" do
-      expect(mail.body.encoded).to match("Hi")
-    end
-  end
-
-  describe "password_reset" do
-    let(:mail) { UserMailer.password_reset }
-
-    it "renders the headers" do
-      expect(mail.subject).to eq("Password reset")
-      expect(mail.to).to eq(["to@example.org"])
-      expect(mail.from).to eq(["from@example.com"])
-    end
-
-    it "renders the body" do
-      expect(mail.body.encoded).to match("Hi")
+      expect(mail.body.encoded).to match user.name
+      expect(mail.body.encoded).to match user.activation_token
+      expect(mail.body.encoded).to match CGI.escape(user.email)
     end
   end
 
