@@ -22,9 +22,12 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       # ユーザ作成に成功した場合ユーザのページに遷移する
-      log_in @user
-      flash[:success] = "Welcome to the Sample App!"
-      redirect_to @user
+      # log_in @user
+      # flash[:success] = "Welcome to the Sample App!"
+      # redirect_to @user
+      UserMailer.account_activation(@user).deliver_now
+      flash[:info] = "Please check your email to activate your account."
+      redirect_to root_url
     else
       render 'new'
     end
