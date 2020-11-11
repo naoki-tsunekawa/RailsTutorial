@@ -4,7 +4,7 @@ RSpec.describe "Users", type: :request do
 
   # 変数宣言
   let(:user) { FactoryBot.create(:user) }
-  let(:admin_user) { FactoryBot.create(:user, admin: true)}
+  let(:admin_user) { FactoryBot.create(:user, email: 'admin@example.com', admin: true)}
   let(:other_user) { FactoryBot.create(:user, email: 'otheruser@example.com') }
   let(:admin_params) { FactoryBot.attributes_for(:user, admin: true) }
 
@@ -26,7 +26,13 @@ RSpec.describe "Users", type: :request do
       end
 
       describe 'sign in response check' do
-        before { post signup_path, params: { user: FactoryBot.attributes_for(:user) } }
+        # before { post signup_path, params: { user: FactoryBot.attributes_for(:user) } }
+        before do
+          post signup_path, params: { user: FactoryBot.attributes_for(:user) }
+          # 作成したテストユーザのアカウントを有効化する
+          get edit_account_activation_path(user.activation_token, email: user.email)
+        end
+
         subject { response }
 
         it { is_expected.to redirect_to user_path(User.last) }
@@ -87,6 +93,10 @@ RSpec.describe "Users", type: :request do
   # ユーザ編集テスト
   describe 'edit' do
     context 'valid request' do
+      before do
+        # アカウントを有効化する
+        get edit_account_activation_path(user.activation_token, email: user.email)
+      end
       # 認可されたユーザーとして
       it "responds successfully" do
         sign_in_as user
@@ -97,6 +107,10 @@ RSpec.describe "Users", type: :request do
 
       # ログインしていないユーザーの場合
       context "as a guest" do
+        before do
+          # アカウントを有効化する
+          get edit_account_activation_path(user.activation_token, email: user.email)
+        end
         # ログイン画面にリダイレクトすることを確認する。
         it "redirects to the login page" do
           # loginせずに編集ページに遷移せずにログインページに遷移することを確認
@@ -109,16 +123,20 @@ RSpec.describe "Users", type: :request do
 
       # アカウントが違うユーザが編集画面に遷移した場合
       context "as other user" do
+        before do
+          # アカウントを有効化する
+          get edit_account_activation_path(other_user.activation_token, email: other_user.email)
+        end
         # ユーザーを更新できないことを確認する
         it "does not update the user" do
           user_edit_params = FactoryBot.attributes_for(:user, name: "EditName")
           # userではないother_userでログインする
           sign_in_as other_user
           # userでupdateする
-          patch user_path(user), params: { user: user_edit_params}
+          patch user_path(user), params: { user: user_edit_params }
           # 更新されていないことを確認
-          # expect(user.reload.name).to eq other_user.name
-          # 更新できずにルートページに遷移する
+          expect(user.reload.name).to eq other_user.name
+          # 更新できずにログインページに遷移する
           expect(response).to redirect_to root_path
         end
       end
@@ -145,6 +163,10 @@ RSpec.describe "Users", type: :request do
     end
     # 管理者ユーザの場合としてユーザを削除できること
     context "as an authorized user" do
+      before do
+        # アカウントを有効化する
+        get edit_account_activation_path(admin_user.activation_token, email: admin_user.email)
+      end
       # ユーザ削除できること
       it "deletes a user" do
         sign_in_as admin_user
