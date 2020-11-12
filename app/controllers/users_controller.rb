@@ -9,8 +9,9 @@ class UsersController < ApplicationController
   # ユーザ一覧
   def index
     # DBからユーザを全件取得する
-    # @users = User.all
     @users = User.page(params[:page]).per(10)
+    # アカウント有効化してあるユーザのみ取得する
+    @users = User.where(activated: true).page(params[:page]).per(10)
   end
 
   # ユーザ新規登録
@@ -22,10 +23,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       # ユーザ作成に成功した場合ユーザのページに遷移する
-      # log_in @user
-      # flash[:success] = "Welcome to the Sample App!"
-      # redirect_to @user
-      UserMailer.account_activation(@user).deliver_now
+      @user.send_activation_email
       flash[:info] = "Please check your email to activate your account."
       redirect_to root_url
     else
@@ -36,6 +34,7 @@ class UsersController < ApplicationController
   # ユーザ詳細
   def show
     @user = User.find(params[:id])
+    redirect_to root_url and return unless @user.activated?
   end
 
   # ユーザ編集
@@ -85,7 +84,6 @@ class UsersController < ApplicationController
     def correct_user
       @user = User.find(params[:id])
       # sessions_helper.rbにcurrent_user?メソッドを追加(リファクタリング)
-      # redirect_to(root_url) unless @user == current_user
       redirect_to(root_url) unless current_user?(@user)
     end
 
