@@ -21,4 +21,23 @@ RSpec.describe UserMailer, type: :mailer do
     end
   end
 
+  describe "password_reset" do
+    let(:mail) { UserMailer.password_reset(user) }
+
+    # メール送信のテスト
+    it "renders the headers" do
+      user.reset_token = User.new_token # この行がないとエラーになった
+      expect(mail.to).to eq ["user_3@example.com"]
+      expect(mail.from).to eq ["noreply@example.com"]
+      expect(mail.subject).to eq "Password reset"
+    end
+
+    # メールプレビューのテスト
+    it "renders the body" do
+      user.reset_token = User.new_token # この行がないとエラーになった
+      expect(mail.body.encoded).to match user.reset_token
+      expect(mail.body.encoded).to match CGI.escape(user.email)
+    end
+  end
+
 end
