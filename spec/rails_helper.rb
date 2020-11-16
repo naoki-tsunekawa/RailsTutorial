@@ -26,6 +26,9 @@ RSpec.configure do |config|
   #作成したヘルパーを追加
   config.include TestHelper
   config.include LoginSupport
+
+  # perform_enqueued_jobs などのテストヘルパーが使えるようになる
+  config.include ActiveJob::TestHelper
 end
 
 # Checks for pending migrations and applies them before tests are run.

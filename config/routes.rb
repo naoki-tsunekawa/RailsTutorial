@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  get 'password_resets/new'
-  get 'password_resets/edit'
+  # get 'password_resets/new'
+  # get 'password_resets/edit'
   # ルートの設定
   root 'static_pages#home'
 
