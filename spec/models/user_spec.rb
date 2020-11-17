@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
 
   #ここからバリデーションのテストです
-  describe 'validations' do
+  describe 'user validations' do
     # email validation spec
     it { is_expected.to validate_presence_of(:name) }
     it { is_expected.to validate_presence_of(:email) }
