@@ -34,6 +34,7 @@ class UsersController < ApplicationController
   # ユーザ詳細
   def show
     @user = User.find(params[:id])
+    @microposts = @user.microposts.page(params[:page]).per(10)
     redirect_to root_url and return unless @user.activated?
   end
 
@@ -68,17 +69,6 @@ class UsersController < ApplicationController
     end
 
     # beforeアクション
-    # ログイン済みユーザーかどうか確認
-    def logged_in_user
-      unless logged_in?
-        # 遷移しようとしたurlを記憶する
-        store_location
-        # フラッシュメッセージの設定
-        flash[:danger] = "Please log in."
-        # ログイン画面へ遷移する
-        redirect_to login_url
-      end
-    end
 
     # 正しいユーザーかどうか確認
     def correct_user
