@@ -9,7 +9,8 @@ class MicropostsController < ApplicationController
       redirect_to root_url
 		else
 			@feed_items = []
-      render 'static_pages/home'
+			# @feed_items = current_user.feed.page(params[:page])
+			render 'static_pages/home'
     end
   end
 
