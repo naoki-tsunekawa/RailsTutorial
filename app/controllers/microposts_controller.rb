@@ -1,6 +1,6 @@
 class MicropostsController < ApplicationController
-	before_action :logged_in_user, only: [:create, :destroy]
-	before_action :correct_user,   only: :destroy
+  before_action :logged_in_user, only: [:create, :destroy]
+  before_action :correct_user,   only: :destroy
 
 	def create
 		@micropost = current_user.microposts.build(micropost_params)
@@ -10,7 +10,11 @@ class MicropostsController < ApplicationController
 		else
 			@feed_items = []
 			# @feed_items = current_user.feed.page(params[:page])
-			render 'static_pages/home'
+			render "static_pages/home"
+			# redirect_back(fallback_location: root_url)
+			# redirect_back fallback_location: root_path, flash: {
+			# 	micropost: @micropost
+			# }
     end
   end
 
@@ -23,7 +27,7 @@ class MicropostsController < ApplicationController
 	private
 
 	def micropost_params
-		params.require(:micropost).permit(:content)
+		params.require(:micropost).permit(:content, :picture)
 	end
 
 	def correct_user
