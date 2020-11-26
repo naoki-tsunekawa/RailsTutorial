@@ -21,4 +21,25 @@ RSpec.describe Relationship, type: :model do
       end
     end
   end
+
+  describe "follow and unfollow" do
+    let(:user) { FactoryBot.create(:user) }
+    let(:other_user) { FactoryBot.create(:user) }
+
+    before { user.follow(other_user) }
+
+    describe "follow" do
+      it "succeeds" do
+        expect(user.following?(other_user)).to be_truthy
+      end
+    end
+
+    describe "unfollow" do
+      it "succeeds" do
+        user.unfollow(other_user)
+        expect(user.following?(other_user)).to be_falsy
+      end
+    end
+  end
+
 end
