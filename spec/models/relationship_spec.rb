@@ -34,6 +34,12 @@ RSpec.describe Relationship, type: :model do
       end
     end
 
+    describe "followers" do
+      it "succeeds" do
+        expect(other_user.followers.include?(user)).to be_truthy
+      end
+    end
+
     describe "unfollow" do
       it "succeeds" do
         user.unfollow(other_user)
