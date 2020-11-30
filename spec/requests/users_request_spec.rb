@@ -188,4 +188,19 @@ RSpec.describe "Users", type: :request do
     end
   end
 
+  # フォロー/フォロワーページの認可
+  describe 'follow follower page approval' do
+    # ログインしていない状態でフォローページにアクセスするとはloginページに遷移
+    it 'redirects following when not logged in' do
+      get following_user_path(user)
+      expect(response).to redirect_to login_url
+    end
+
+    # ログインしていない状態でフォローワーページにアクセスするとはloginページに遷移
+    it 'redirects followers when not logged in' do
+      get followers_user_path(user)
+      expect(response).to redirect_to login_url
+    end
+  end
+
 end
