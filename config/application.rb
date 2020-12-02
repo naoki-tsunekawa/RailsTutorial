@@ -14,15 +14,18 @@ module RailsTutorial
     # テストフレームワークにrspecを指定することで、rails g ~を実行した際、自動的にspecファイルも作成する設定
     config.generators do |g|
       g.test_framework :rspec,
-                       helper_specs: false,
-                       routing_specs: false,
-                       view_specs: false,
-                       controller_specs: false
+                      helper_specs: false,
+                      routing_specs: false,
+                      view_specs: false,
+                      controller_specs: false
     end
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
+
+    # 認証トークンをremoteフォームに埋め込む
+    config.action_view.embed_authenticity_token_in_remote_forms = true
   end
 end
