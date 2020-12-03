@@ -12,5 +12,9 @@ FactoryBot.define do
       name { Faker::Name.name }
       email { Faker::Internet.email }
     end
+
+    trait :with_microposts do
+      after(:create) { |user| create_list(:micropost, 5, user: user)}
+    end
   end
 end
